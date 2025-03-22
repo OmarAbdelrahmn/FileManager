@@ -18,5 +18,14 @@ public class FilesController(IFileService service) : ControllerBase
 
         return Ok(FileId);
     }
+    
+    [HttpPost("upload-many")]
+
+    public async Task<IActionResult> UploadManyfilesAsync([FromForm] UploadManyFilesRequest request)
+    {
+        var FilesId = await service.UploadManyFiles(request);
+
+        return Ok(FilesId);
+    }
 
 }
