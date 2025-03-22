@@ -1,4 +1,5 @@
-﻿using FileManager.API.Contracts.Files.Common;
+﻿using FileManager.Api.Contracts.Common;
+using FileManager.API.Contracts.Files.Common;
 using FileManager.API.Settings;
 using FluentValidation;
 
@@ -10,26 +11,9 @@ public class UpdoadFilesRequestValidator : AbstractValidator<UpdoadFilesRequest>
     {
 
         RuleFor(c => c.File)
-            .SetValidator(new FileSizeValidator());
+            .SetValidator(new FileSizeValidator())
+            .SetValidator(new BlockedFileExtentionValidator())
+            .SetValidator(new FileNameValidator());
 
-        RuleFor(c => c.File)
-            .Must((request, context) =>
-            {
-                BinaryReader reader = new (request.File.OpenReadStream());
-
-                var headerBytes = reader.ReadBytes(2);
-
-                var fileSequenceHex = BitConverter.ToString(headerBytes);
-
-                foreach (var signature in FileSettings.BlockedSigntures)
-                    if (fileSequenceHex.Equals(fileSequenceHex , StringComparison.OrdinalIgnoreCase))                   
-                        return false;
-                  
-                return true;
-
-            })
-            .WithMessage("Invalid file format")
-            .When(c => c.File is not null);
-        
     }
 }
