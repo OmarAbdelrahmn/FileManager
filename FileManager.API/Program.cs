@@ -1,6 +1,9 @@
 using FileManager.API.Persistence;
 using FileManager.API.Services.FileService;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,10 @@ builder.Services.AddDbContext<ApplicationDbcontext>(options =>
 );
 
 builder.Services.AddScoped<IFileService , FileService >();
+
+builder.Services
+    .AddFluentValidationAutoValidation()
+    .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
