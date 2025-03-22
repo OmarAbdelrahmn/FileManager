@@ -1,9 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FileManager.API.Contracts.Files;
+using FileManager.API.Services.FileService;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileManager.API.Controllers;
 [Route("[controller]")]
 [ApiController]
-public class FilesController : ControllerBase
+public class FilesController(IFileService service) : ControllerBase
 {
+    private readonly IFileService service = service;
+
+    [HttpPost("upload")]
+
+    public async Task<IActionResult> UploadfileAsync([FromForm] UpdoadFilesRequest request)
+    {
+        var FileId = await service.Upload(request);
+
+        return Ok(FileId);
+    }
+
 }
