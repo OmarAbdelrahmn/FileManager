@@ -17,7 +17,7 @@ public class BlockedFileExtentionValidator : AbstractValidator<IFormFile>
                 var fileSequenceHex = BitConverter.ToString(headerBytes);
 
                 foreach (var signature in FileSettings.BlockedSigntures)
-                    if (fileSequenceHex.Equals(fileSequenceHex, StringComparison.OrdinalIgnoreCase))
+                    if (signature.Equals(fileSequenceHex, StringComparison.OrdinalIgnoreCase))
                         return false;
 
                 return true;

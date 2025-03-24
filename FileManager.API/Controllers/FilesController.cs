@@ -11,7 +11,6 @@ public class FilesController(IFileService service) : ControllerBase
     private readonly IFileService service = service;
 
     [HttpPost("upload")]
-
     public async Task<IActionResult> UploadfileAsync([FromForm] UpdoadFilesRequest request)
     {
         var FileId = await service.Upload(request);
@@ -20,7 +19,6 @@ public class FilesController(IFileService service) : ControllerBase
     }
     
     [HttpPost("upload-many")]
-
     public async Task<IActionResult> UploadManyfilesAsync([FromForm] UploadManyFilesRequest request)
     {
         var FilesId = await service.UploadManyFiles(request);
