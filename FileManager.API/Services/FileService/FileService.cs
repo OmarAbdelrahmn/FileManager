@@ -31,6 +31,20 @@ public class FileService(IWebHostEnvironment webHostEnvironment , ApplicationDbc
         return (memoryStream.ToArray() , file.ContentType , file.FileName);
     }
 
+    public async Task<(FileStream? fileStream, string contentType, string fileName)> FileStream(Guid Id)
+    {
+        var file = await dbcontext.Files.FindAsync(Id);
+
+        if (file == null)
+            return (null, string.Empty, string.Empty);
+
+        var path = Path.Combine(filepath, file.StoredFileName);
+
+        var filestream = File.OpenRead(path);
+
+        return(filestream , file.ContentType, file.FileName);
+    }
+
     public async Task<Guid> Upload(UpdoadFilesRequest request)
     {
        var uploadedfile = await SaveFile(request.File);
