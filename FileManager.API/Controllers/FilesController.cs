@@ -25,5 +25,13 @@ public class FilesController(IFileService service) : ControllerBase
 
         return Ok(FilesId);
     }
+    
+    [HttpPost("upload-image")]
+    public async Task<IActionResult> UploadImagesAsync([FromForm] UpdoadImagessRequest request)
+    {
+         await service.UpoadImage(request.File);
+
+        return Created();
+    }
 
 }
