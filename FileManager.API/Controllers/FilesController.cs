@@ -34,4 +34,14 @@ public class FilesController(IFileService service) : ControllerBase
         return Created();
     }
 
+    [HttpGet("download/{id}")]
+    public async Task<IActionResult> DownloadAsync(Guid id)
+    {
+        var (content , contenttype , filename) = await service.DownloadFileAsync(id);
+
+        return content is [] ?
+            NoContent() :
+            File(content, contenttype, filename);
+    }
+
 }

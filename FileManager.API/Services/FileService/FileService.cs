@@ -11,7 +11,7 @@ public class FileService(IWebHostEnvironment webHostEnvironment , ApplicationDbc
     private readonly string Imageepath = $"{webHostEnvironment.WebRootPath}/Images";
     private readonly ApplicationDbcontext dbcontext = dbcontext;
 
-    public async Task<(byte[] filecontent, string contentType, string fileName)?> DownloadFileAsync(Guid Id)
+    public async Task<(byte[] filecontent, string contentType, string fileName)> DownloadFileAsync(Guid Id)
     {
         var file = await dbcontext.Files.FindAsync(Id);
 
