@@ -2,5 +2,5 @@
 
 public record UpdoadImagessRequest
 (
-    IFormFile File
+    IFormFile Image
     );

@@ -29,7 +29,7 @@ public class FilesController(IFileService service) : ControllerBase
     [HttpPost("upload-image")]
     public async Task<IActionResult> UploadImagesAsync([FromForm] UpdoadImagessRequest request)
     {
-         await service.UpoadImage(request.File);
+         await service.UpoadImage(request.Image);
 
         return Created();
     }
