@@ -43,5 +43,15 @@ public class FilesController(IFileService service) : ControllerBase
             NoContent() :
             File(content, contenttype, filename);
     }
+    
+    [HttpGet("stream/{id}")]
+    public async Task<IActionResult> stream([FromRoute]Guid id)
+    {
+        var (filestream , contenttype , filename) = await service.FileStream(id);
+
+        return filestream is null ?
+            NoContent() :
+            File(filestream, contenttype, filename,enableRangeProcessing: true);
+    }
 
 }
