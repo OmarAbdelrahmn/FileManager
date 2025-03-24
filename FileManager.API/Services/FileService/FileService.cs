@@ -11,6 +11,26 @@ public class FileService(IWebHostEnvironment webHostEnvironment , ApplicationDbc
     private readonly string Imageepath = $"{webHostEnvironment.WebRootPath}/Images";
     private readonly ApplicationDbcontext dbcontext = dbcontext;
 
+    public async Task<(byte[] filecontent, string contentType, string fileName)?> DownloadFileAsync(Guid Id)
+    {
+        var file = await dbcontext.Files.FindAsync(Id);
+
+        if (file == null )
+            return ([], string.Empty, string.Empty);
+
+        var path = Path.Combine(filepath, file.StoredFileName);
+
+        MemoryStream memoryStream = new();
+
+        using FileStream fileStream = new(path, FileMode.Open);
+
+        fileStream.CopyTo(memoryStream);
+
+        memoryStream.Position = 0;
+
+        return (memoryStream.ToArray() , file.ContentType , file.FileName);
+    }
+
     public async Task<Guid> Upload(UpdoadFilesRequest request)
     {
        var uploadedfile = await SaveFile(request.File);
