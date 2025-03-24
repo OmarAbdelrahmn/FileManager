@@ -1,4 +1,6 @@
-﻿using FileManager.API.Settings;
+﻿using FileManager.Api.Contracts.Common;
+using FileManager.API.Contracts.Files.Common;
+using FileManager.API.Settings;
 using FluentValidation;
 
 namespace FileManager.API.Contracts.Files;
@@ -7,6 +9,10 @@ public class UploadImageRequestValidator : AbstractValidator<UpdoadImagessReques
 {
     public UploadImageRequestValidator()
     {
+        RuleFor(c => c.Image)
+            .SetValidator(new FileSizeValidator())
+            .SetValidator(new FileNameValidator());
+
         RuleFor(c => c.Image)
             .Must((request, context) =>
             {

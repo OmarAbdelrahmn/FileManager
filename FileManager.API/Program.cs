@@ -35,6 +35,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapStaticAssets();
+
 app.UseAuthorization();
 
 app.MapControllers();
