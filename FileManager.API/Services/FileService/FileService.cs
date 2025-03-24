@@ -8,6 +8,7 @@ namespace FileManager.API.Services.FileService;
 public class FileService(IWebHostEnvironment webHostEnvironment , ApplicationDbcontext dbcontext) : IFileService
 {
     private readonly string filepath = $"{webHostEnvironment.WebRootPath}/Uploads";
+    private readonly string Imageepath = $"{webHostEnvironment.WebRootPath}/Images";
     private readonly ApplicationDbcontext dbcontext = dbcontext;
 
     public async Task<Guid> Upload(UpdoadFilesRequest request)
@@ -35,6 +36,17 @@ public class FileService(IWebHostEnvironment webHostEnvironment , ApplicationDbc
         await dbcontext.SaveChangesAsync();
 
         return files.Select(f => f.Id).ToList();
+    }
+
+    public async Task UpoadImage(IFormFile image)
+    {
+
+        var path = Path.Combine(Imageepath, image.FileName);
+
+        using var stream = File.Create(path);
+
+        await image.CopyToAsync(stream);
+
     }
 
     private async Task<UploadedFile> SaveFile (IFormFile file)

@@ -6,4 +6,5 @@ public interface IFileService
 {
     Task<Guid> Upload(UpdoadFilesRequest request);
     Task<IEnumerable<Guid>> UploadManyFiles(UploadManyFilesRequest request);
+    Task UpoadImage(IFormFile image);
 }
