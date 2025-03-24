@@ -15,7 +15,7 @@ public class FilesController(IFileService service) : ControllerBase
     {
         var FileId = await service.Upload(request);
 
-        return Ok(FileId);
+        return CreatedAtAction(nameof(DownloadAsync), new{ id = FileId} , null);
     }
     
     [HttpPost("upload-many")]
